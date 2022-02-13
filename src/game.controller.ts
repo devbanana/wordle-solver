@@ -1,12 +1,14 @@
 import { Controller, Get } from '@nestjs/common';
 import { GameService } from './game.service';
 
-@Controller()
+@Controller('game')
 export class GameController {
-  constructor(private readonly appService: GameService) {}
+  constructor(private readonly game: GameService) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Get('start')
+  start(): { game: string } {
+    const game = this.game.start();
+
+    return { game };
   }
 }
