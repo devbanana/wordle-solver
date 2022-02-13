@@ -8,8 +8,8 @@ export class GuessNarrower {
     private readonly answer: string,
     private readonly wordList: string[],
   ) {
-    this.state = Array(answer.length).fill(States.Absent);
-    this.processedCorrect = Array(answer.length).fill(false);
+    this.state = Array<States>(answer.length).fill(States.Absent);
+    this.processedCorrect = Array<boolean>(answer.length).fill(false);
   }
 
   guess(word: string): string[] {
@@ -29,7 +29,7 @@ export class GuessNarrower {
 
     return this.wordList
       .filter(value => {
-        return value.match(regex.join(''));
+        return RegExp(regex.join('')).exec(value);
       })
       .sort();
   }
