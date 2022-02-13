@@ -1,8 +1,8 @@
 import { States } from './states';
 
 export class GuessNarrower {
-  private state: States[];
-  private processedCorrect: boolean[];
+  private readonly state: States[];
+  private readonly processedCorrect: boolean[];
 
   constructor(
     private readonly answer: string,
