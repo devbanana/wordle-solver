@@ -28,7 +28,7 @@ export class GuessNarrower {
     }
 
     return this.wordList
-      .filter((value) => {
+      .filter(value => {
         return value.match(regex.join(''));
       })
       .sort();
