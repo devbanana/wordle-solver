@@ -6,8 +6,8 @@ export class GameController {
   constructor(private readonly game: GameService) {}
 
   @Get('start')
-  start(): { game: string } {
-    const game = this.game.start();
+  start(date: string): { game: string } {
+    const game = this.game.start(date);
 
     return { game };
   }
