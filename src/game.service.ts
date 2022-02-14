@@ -4,6 +4,8 @@ import { DateTime } from 'luxon';
 import * as words from '../words.json';
 import { GuessNarrower } from './guess-narrower';
 import { WordleEvaluatorService } from './wordle-evaluator.service';
+import { GameNotFoundError } from './exceptions/game-not-found.error';
+import { InvalidWordError } from './exceptions/invalid-word.error';
 
 interface Game {
   token: string;
@@ -57,7 +59,7 @@ export class GameService {
       !this.possibleWords.includes(guess) &&
       !this.validWords.includes(guess)
     ) {
-      throw new Error('Invalid word specified');
+      throw new InvalidWordError();
     }
 
     return game.narrower.guess(guess);
@@ -67,7 +69,7 @@ export class GameService {
     const game = this.games.get(token);
 
     if (game === undefined) {
-      throw new Error('Game not found');
+      throw new GameNotFoundError();
     }
 
     return game;
