@@ -17,9 +17,9 @@ interface Game {
 
 @Injectable()
 export class GameService {
-  private games: Map<string, Game> = new Map<string, Game>();
-  private possibleWords: string[];
-  private validWords: string[];
+  private readonly games: Map<string, Game> = new Map<string, Game>();
+  private readonly possibleWords: string[];
+  private readonly validWords: string[];
 
   constructor(private readonly evaluator: WordleEvaluatorService) {
     this.possibleWords = words.answers;
