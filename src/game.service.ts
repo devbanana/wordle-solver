@@ -6,6 +6,7 @@ import { GuessNarrower } from './guess-narrower';
 import { WordleEvaluatorService } from './wordle-evaluator.service';
 import { GameNotFoundError } from './exceptions/game-not-found.error';
 import { InvalidWordError } from './exceptions/invalid-word.error';
+import { InvalidDateError } from './exceptions/invalid-date.error';
 
 interface Game {
   token: string;
@@ -27,8 +28,12 @@ export class GameService {
   }
 
   start(dateString: string): string {
-    const token = v4();
     const date = DateTime.fromISO(dateString);
+    if (!date.isValid) {
+      throw new InvalidDateError();
+    }
+
+    const token = v4();
     const number = date.diff(DateTime.fromISO('2021-06-19'), 'days').as('days');
     const word = this.possibleWords[number % this.possibleWords.length];
     const narrower = new GuessNarrower(
