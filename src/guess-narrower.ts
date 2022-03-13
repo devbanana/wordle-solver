@@ -59,11 +59,10 @@ export class GuessNarrower {
   }
 
   private addPossibleLetter(index: number, letter: string): void {
-    if (this.isPositionCorrect(index)) {
-      return;
+    if (!this.isPositionCorrect(index)) {
+      this.absentPositions[index].add(letter);
     }
 
-    this.absentPositions[index].add(letter);
     this.presentPositions.add(letter);
   }
 
