@@ -7,6 +7,7 @@ import { WordleEvaluatorService } from './wordle-evaluator.service';
 import { GameNotFoundError } from './exceptions/game-not-found.error';
 import { InvalidWordError } from './exceptions/invalid-word.error';
 import { InvalidDateError } from './exceptions/invalid-date.error';
+import { StartGameDto } from './start-game.dto';
 
 interface Game {
   token: string;
@@ -27,7 +28,7 @@ export class GameService {
     this.validWords = words.valid;
   }
 
-  start(dateString: string): string {
+  start(dateString: string): StartGameDto {
     const date = DateTime.fromISO(dateString);
     if (!date.isValid) {
       throw new InvalidDateError();
@@ -46,7 +47,7 @@ export class GameService {
 
     this.games.set(token, game);
 
-    return token;
+    return new StartGameDto(number, date, token);
   }
 
   getNumber(token: string): number {

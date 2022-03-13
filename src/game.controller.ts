@@ -9,6 +9,13 @@ import { GameService } from './game.service';
 import { GameNotFoundError } from './exceptions/game-not-found.error';
 import { InvalidWordError } from './exceptions/invalid-word.error';
 import { InvalidDateError } from './exceptions/invalid-date.error';
+import { StartGameDto } from './start-game.dto';
+
+interface StartResponse {
+  number: number;
+  date: string;
+  token: string;
+}
 
 interface WordsResponse {
   words: string[];
@@ -24,8 +31,8 @@ export class GameController {
   constructor(private readonly game: GameService) {}
 
   @Get('start/:date')
-  start(@Param('date') date: string): { game: string } {
-    let game: string;
+  start(@Param('date') date: string): StartResponse {
+    let game: StartGameDto;
 
     try {
       game = this.game.start(date);
@@ -37,7 +44,11 @@ export class GameController {
       throw error;
     }
 
-    return { game };
+    return {
+      number: game.number,
+      date: game.date.toFormat('yyyy-MM-dd'),
+      token: game.token,
+    };
   }
 
   @Get(':token/guess/:word')
