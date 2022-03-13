@@ -47,7 +47,7 @@ export class GameService {
 
     this.games.set(token, game);
 
-    return new StartGameDto(number, date, token);
+    return new StartGameDto(number, date.toFormat('yyyy-MM-dd'), token);
   }
 
   getNumber(token: string): number {

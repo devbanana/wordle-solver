@@ -11,12 +11,6 @@ import { InvalidWordError } from './exceptions/invalid-word.error';
 import { InvalidDateError } from './exceptions/invalid-date.error';
 import { StartGameDto } from './start-game.dto';
 
-interface StartResponse {
-  number: number;
-  date: string;
-  token: string;
-}
-
 interface WordsResponse {
   words: string[];
 }
@@ -31,11 +25,9 @@ export class GameController {
   constructor(private readonly game: GameService) {}
 
   @Get('start/:date')
-  start(@Param('date') date: string): StartResponse {
-    let game: StartGameDto;
-
+  start(@Param('date') date: string): StartGameDto {
     try {
-      game = this.game.start(date);
+      return this.game.start(date);
     } catch (error) {
       if (error instanceof InvalidDateError) {
         throw new BadRequestException(error.message);
@@ -43,12 +35,6 @@ export class GameController {
 
       throw error;
     }
-
-    return {
-      number: game.number,
-      date: game.date.toFormat('yyyy-MM-dd'),
-      token: game.token,
-    };
   }
 
   @Get(':token/guess/:word')
